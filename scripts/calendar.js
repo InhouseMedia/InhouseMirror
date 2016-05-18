@@ -5,6 +5,7 @@ var calendar = (function(){
 	var upcomming = [];
 	var past = [];
 	
+	var timeOutPlaySound = null;
 	var timeOutRefresh = null;
 	var timeOutRefreshFadeOut = null;
 	var timeOutRefreshFadeIn = null;
@@ -18,6 +19,7 @@ var calendar = (function(){
 	var onloadTimeout = null;
 	
 	var refresh = 0;
+	var audio = $('<audio>');
 	
 	var timeMin = function(){	
 		var x = new Date();
@@ -48,7 +50,8 @@ var calendar = (function(){
 		upcommingEvents: 10,
 		pastEvents: 10,
 		dateFormat: 'dd MMMM',
-		blinkSpeed: 5000
+		blinkSpeed: 5000,
+		sound: 'sound/beep.mp3'
 	};
 	
 	var createApiUrl = function(){
@@ -212,15 +215,17 @@ var calendar = (function(){
 		});
 		
 		var refreshList = _.sortBy(x, function(item){return item});
-		refresh = $(refreshList).get(1) || 5000;
+		refresh = $(refreshList).get(0) || 5000;
 		
 		var refreshConsoleTime = (refresh/60000 > 60)? refresh/3600000: refresh/60000;
 		var refreshConsoleType = (refresh/60000 > 60)? 'hours.': 'minutes.';
 		console.log('Refresh calendar in', (refreshConsoleTime).toFixed(2), refreshConsoleType);
 		
+		window.clearTimeout(timeOutPlaySound);
 		window.clearTimeout(timeOutRefreshFadeOut);
 		window.clearTimeout(timeOutRefresh);
 		
+		timeOutPlaySound = window.setTimeout(playSound, refresh - 1000);
 		timeOutRefreshFadeOut = window.setTimeout(toggleFader.bind('fadeOutTable', 'table'), refresh - 1000);
 		timeOutRefresh = window.setTimeout(getEvents, refresh);
 	};
@@ -248,6 +253,17 @@ var calendar = (function(){
 		};
 	};
 
+	var setSound = function(){
+		if(settings.sound == '') return;
+		
+		audio.attr({'src': settings.sound, 'autostart':false, 'id':'sound'});
+		$('body').append(audio);
+	};
+	
+	var playSound = function(){
+		audio.get(0).play();
+	};
+	
 	var onload = function(){
 		sortEventsList();
 		createEventTable();
@@ -266,6 +282,7 @@ var calendar = (function(){
 			settings.element = $(settings.element);
 			
 			createApiUrl();
+			setSound();
 			getEvents();
 		},
 		

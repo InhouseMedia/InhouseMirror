@@ -19,8 +19,9 @@
 		<script src="scripts/stringformat-1.09.min.js"></script>
 		<script src="scripts/stringformat.nl-NL.js"></script>
 		<script src="scripts/config.js"></script>
-		<script src="scripts/calendar.js"></script>
 		<script src="scripts/timer.js"></script>
+		<script src="scripts/calendar.js"></script>
+		<script src="scripts/weather.js"></script>
 		<script src="scripts/refresh.js"></script>
 		<script>
 			$(document).ready(function(){
@@ -28,12 +29,15 @@
 				
 				calendar.init();
 				timer.init();
-				
+				weather.init()
 				refresh.init();
 			});
 			$(window).load(function(){
-				refresh.focus();	
+				refresh.focus();
+				refresh.motion();	
 			});
+			
+			//window.addEventListener("DOMContentLoaded", function() {refresh.motion();}, false)
 		</script>
 	</head>
 	<body class="loading">
@@ -56,7 +60,6 @@
 				<div class="col-md-4"></div>
 				<div class="col-md-4" id="weather"></div>
 			</div>
-			
 		</div>
 	</body>
 </html>

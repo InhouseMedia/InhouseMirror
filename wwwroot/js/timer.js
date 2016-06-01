@@ -13,7 +13,11 @@ var timer = (function(){
 		fade: true
 	};
 	
-	var init = function(){
+	var init = function(options){
+		settings = $.extend({}, settings, options);
+		settings.timeElement = $(settings.timeElement);
+		settings.dateElement = $(settings.dateElement);
+			
 		var fade = (settings.fade)? 'fader': ''; 
 		settings.timeElement.addClass(fade);
 		settings.dateElement.addClass(fade);
@@ -42,11 +46,7 @@ var timer = (function(){
 	
 	return {
 		init: function(options){
-			settings = $.extend({}, settings, options);
-			settings.timeElement = $(settings.timeElement);
-			settings.dateElement = $(settings.dateElement);
-			
-			init();
+			init(options);
 			setTime();
 			setDate();
 		},		

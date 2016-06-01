@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	sffjs.setCulture('nl-NL');
 	
-	calendar.init();
+	calendar.init({upcommingEvents:3, pastEvents:3});
 	timer.init();
 	weather.init()
 	refresh.init();

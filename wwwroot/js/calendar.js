@@ -1,3 +1,6 @@
+/* TODO:
+- Implement multiple calendar accounts (config already optimized)
+*/
 var calendar = (function(){
 	'use strict';
 	
@@ -41,8 +44,8 @@ var calendar = (function(){
 	var settings = {
 		element: '#calendar',
 		url: 'https://www.googleapis.com/calendar/v3/calendars/{0}/events/',
-		account: config.account,
-		key: config.token,
+		account: config.calendar.accounts[0].account,
+		key: config.calendar.accounts[0].token,
 		alwaysIncludeEmail: false,
 		showDeleted: false,
 		timeMin: timeMin(),
@@ -51,13 +54,20 @@ var calendar = (function(){
 		pastEvents: 10,
 		dateFormat: 'dd MMMM',
 		blinkSpeed: 5000,
-		sound: 'sounds/beep.mp3'
+		sound: 'sounds/beep.mp3',
+		debug: false
+	};
+	
+	var init = function(options){
+		settings = $.extend({}, settings, options);
+		settings.element = $(settings.element);
+		settings.debug = !settings.debug? config.debug : settings.debug;
 	};
 	
 	var createApiUrl = function(){
 		var filterSettings = _.omit(settings,['url', 'account', 'upcommingEvents', 'pastEvents', 'element', 'dateFormat', 'sort']);
 		
-		settings.url = settings.url.replace('{0}', settings.account);	
+		settings.url = settings.url.format(settings.account);	
 		settings.url+= '?' + $.param(filterSettings);
 		//console.log(settings.url);
 	};
@@ -125,7 +135,7 @@ var calendar = (function(){
 		});
 	};
 	
-	var createEventTable = function(){
+	var createTable = function(){
 		sffjs.setCulture('nl-NL');
 		
 		var upcommingTbody = createRows(upcomming);
@@ -266,7 +276,7 @@ var calendar = (function(){
 	
 	var onload = function(){
 		sortEventsList();
-		createEventTable();
+		createTable();
 		switchDate();
 		showEvents();
 	};
@@ -278,9 +288,7 @@ var calendar = (function(){
 	
 	return {
 		init: function(options){
-			settings = $.extend({}, settings, options);
-			settings.element = $(settings.element);
-			
+			init(options);
 			createApiUrl();
 			setSound();
 			getEvents();

@@ -1,5 +1,13 @@
+/*TODO:
+- save image1 to disk when diff.trigger is activated (make it a setting)
+- refresh screen also with setTimeout and not only with meta-tag refresh
+- disable automatic hide when camera/motion detection isn't active
+- compare image diff with small images and save image to disk as large image.
+- move in front of screen, fade-in. Move away from screen, fade-out
+ */
 var refresh = (function(){
 	'use strict';
+	
 	var blurTimer = null;
 	
 	var noCanvas = null;
@@ -10,9 +18,10 @@ var refresh = (function(){
 	var xcontext = null;
 	
 	var settings = {
-		blurTimer: (1000*60),
+		motionDetection: true,
+		blurTimer: (1000 * 60),
 		snapRate: 1000,
-		sensitivity: 30,
+		sensitivity: 25,
 		width: 640,
 		height: 480,
 		debug: false
@@ -21,6 +30,7 @@ var refresh = (function(){
 	var init = function(options){
 		settings = $.extend({}, settings, options);
 		settings.element = $(settings.element);
+		settings.debug = !settings.debug? config.debug : settings.debug;
 		//$(window).focus(function(){ location.reload(true); });
 	
 		noCanvas = $('<canvas>').attr({'width': settings.width, 'height': settings.height});
@@ -30,13 +40,18 @@ var refresh = (function(){
 	var createRefreshHeader = function(){
 		var today = new Date();
 		var tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1,0,0,0,10);
-		
-		var meta = $('<meta>').attr({'http-equiv': 'refresh', 'content': tomorrow - today});
+		var refresh = Math.round((tomorrow - today)/1000);
+		var meta = $('<meta>').attr({'http-equiv': 'refresh', 'content': refresh });
 	
 		meta.insertAfter($('head meta[charset]'));
+		
+		var refreshConsoleTime = (refresh/3600 > 1)? refresh/3600: refresh/60;
+		var refreshConsoleType = (refresh/3600 > 1)? 'hours.': 'minutes.';
+		console.log('Refresh page in', (refreshConsoleTime).toFixed(2), refreshConsoleType);
 	};
 	
 	var setBlurTimer = function(){
+		if(!settings.motionDetection) return;
 		blurTimer = window.setTimeout(blur,settings.blurTimer);
 	};
 	
@@ -102,7 +117,7 @@ var refresh = (function(){
 				if($('body').hasClass('loading')){
 					window.location.reload(false);
 				}
-				
+				console.log('motion trigger');
 				window.clearTimeout(blurTimer);
 				blurTimer = window.setTimeout(blur, settings.blurTimer);
 			}
@@ -153,6 +168,8 @@ var refresh = (function(){
 			blur();
 		},
 		motion: function(){
+			if(!settings.motionDetection) return;
+			
 			createMotionDetection();
 			startMotionDetection();
 			createCanvas();

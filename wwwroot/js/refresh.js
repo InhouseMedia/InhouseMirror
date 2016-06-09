@@ -1,14 +1,8 @@
-/*TODO:
-- save image1 to disk when diff.trigger is activated (make it a setting)
-- refresh screen also with setTimeout and not only with meta-tag refresh
-- disable automatic hide when camera/motion detection isn't active
-- compare image diff with small images and save image to disk as large image.
-- move in front of screen, fade-in. Move away from screen, fade-out
- */
 var refresh = (function(){
 	'use strict';
 	
 	var blurTimer = null;
+	var compareTimer = null;
 	
 	var noCanvas = null;
 	var noContext = null;
@@ -18,12 +12,15 @@ var refresh = (function(){
 	var xcontext = null;
 	
 	var settings = {
+		modules: [],
 		motionDetection: true,
-		blurTimer: (1000 * 60),
-		snapRate: 1000,
-		sensitivity: 25,
-		width: 640,
-		height: 480,
+		blurTimer: (1000 * 20),
+		snapRate: 800,
+		sensitivity: 10,
+		videoWidth: 640,
+		videoHeight: 480,
+		imageWidth: 64,
+		imageHeight: 48,
 		debug: false
 	};
 	
@@ -33,8 +30,13 @@ var refresh = (function(){
 		settings.debug = !settings.debug? config.debug : settings.debug;
 		//$(window).focus(function(){ location.reload(true); });
 	
-		noCanvas = $('<canvas>').attr({'width': settings.width, 'height': settings.height});
+		noCanvas = $('<canvas>').attr({'width': settings.imageWidth, 'height': settings.imageHeight});
 		noContext = noCanvas.get(0).getContext("2d");
+	};
+	
+	var _register = function(mod){
+		settings.modules.push(mod);
+		
 	};
 	
 	var createRefreshHeader = function(){
@@ -56,11 +58,11 @@ var refresh = (function(){
 	};
 	
 	var createMotionDetection = function(){
-		var video = $('<video>').attr({'autoplay': true, 'id': 'motion', 'width': settings.width, 'height': settings.height});
+		var video = $('<video>').attr({'autoplay': true, 'id': 'motion', 'width': settings.videoWidth, 'height': settings.videoHeight});
 			video.click(compareImages);
 		
 		xvideo = video.get(0);
-		//if(settings.debug) $('body').append(video);
+		if(settings.debug) $('body').append(video);
 	};
 	
 	var startMotionDetection = function(){
@@ -79,7 +81,7 @@ var refresh = (function(){
 	};
 	
 	var createCanvas = function(){
-		xcanvas = $('<canvas>').attr({'id':'canvas', 'width': settings.width, 'height': settings.height});
+		xcanvas = $('<canvas>').attr({'id':'canvas', 'width': settings.imageWidth, 'height': settings.imageHeight});
 		
 		xcontext = xcanvas.get(0).getContext("2d");
 		
@@ -87,17 +89,17 @@ var refresh = (function(){
 	};
 	
 	var captureImage = function(){
-		noContext.drawImage(xvideo, 0, 0, settings.width, settings.height);
+		noContext.drawImage(xvideo, 0, 0, settings.videoWidth, settings.videoHeight, 0, 0 , settings.imageWidth, settings.imageHeight);
 			
-		var imageData = noContext.getImageData(0, 0, settings.width, settings.height);
+		var imageData = noContext.getImageData(0, 0, settings.imageWidth, settings.imageHeight);
         var data = imageData.data;
-
+/*
         for(var i = 0; i < data.length; i += 4) {
           var brightness = (data[i] + data[i+1] + data[i+2])/3; //Grayscale image
           data[i] = brightness; //Red
           data[i+1] = brightness; //Green
           data[i+2] = brightness; //Blue
-        }
+        }*/
 		return data;
 	};
 	
@@ -111,40 +113,46 @@ var refresh = (function(){
 			xcontext.putImageData(diff.imageData, 0,0);
 		
 			//testing
-			if(settings.debug) $(xcanvas).css({'border': '1px solid ' + ((diff.trigger)? 'red' : 'transparent')}); 
+			if(settings.debug) {
+				$(xcanvas).css({'border': '1px solid ' + ((diff.procent >= settings.sensitivity)? 'red' : 'transparent')});
+				$(xvideo).css({'border': '1px solid ' + ((diff.procent >= settings.sensitivity)? 'red' : 'transparent')});
+			} 
 			
-			if(diff.trigger){	
+			if(diff.procent >= settings.sensitivity){	
 				if($('body').hasClass('loading')){
-					window.location.reload(false);
+					//window.location.reload(false);
+					focus();
+					settings.modules.forEach(function(item){item.refresh();});
 				}
-				console.log('motion trigger');
+				console.log('motion trigger', diff.procent, '%');
 				window.clearTimeout(blurTimer);
 				blurTimer = window.setTimeout(blur, settings.blurTimer);
 			}
 			
-		},settings.snapRate - 1);	
+		},settings.snapRate);	
 		
-		window.setTimeout(compareImages,settings.snapRate)
+		compareTimer = window.setTimeout(compareImages,settings.snapRate)
 	};
 	
 	var diffImage = function(image1,image2){
-		var imageData = noContext.getImageData(0, 0, settings.width, settings.height);
+		var imageData = noContext.getImageData(0, 0, settings.imageWidth, settings.imageHeight);
         var data = imageData.data;
 		var count = 0;
 		for(var i = 0; i < image1.length; i += 4) {
-		  data[i] = Math.abs(image1[i]-image2[i]); //Red
-          data[i+1] = Math.abs(image1[i+1]-image2[i+1]); //Green
-          data[i+2] = Math.abs(image1[i+2]-image2[i+2]); //Blue
+		  var brightnessImage1 = (image1[i] + image1[i+1] + image1[i+2])/3;
+		  var brightnessImage2 = (image2[i] + image2[i+1] + image2[i+2])/3;
+		  var brightness = Math.abs(brightnessImage1 - brightnessImage2) > 30 ?255: 0;
 		  
-		  count+= (Math.abs(image1[i]-image2[i])>2)?1:0;
-		  count+= (Math.abs(image1[i+1]-image2[i+1])>2)?1:0;
-		  count+= (Math.abs(image1[i+2]-image2[i+2])>2)?1:0;
+		  data[i] = brightness; //Red
+          data[i+1] = brightness; //Green
+          data[i+2] = brightness; //Blue
+		  
+		  count+= brightness > 0 ? 1: 0;
         }
-
-		var procent = Math.round(count/image1.length *100);
-		var trigger = (procent > settings.sensitivity);
 		
-		return {imageData: imageData, trigger: trigger};
+		var procent = Math.round(count/(image1.length/4) * 100);
+		if(settings.debug) console.log(procent + '%');
+		return {imageData: imageData, procent: procent};
 	};
 	
 	var focus = function(){
@@ -177,10 +185,22 @@ var refresh = (function(){
 		},
 		start: function(){
 			startMotionDetection();
+			compareImages();
 		},
 		stop: function(){
-			console.log(xstream.active);
-			if(xstream.active) xstream.getTracks()[0].stop();
+			if(xstream.active){
+				window.clearTimeout(compareTimer);
+				xstream.getTracks()[0].stop();	
+			} 
+		},
+		register: function(mod){
+			_register(mod);
+			
+		},
+		unregister: function(module){
+			var index = settings.modules.indexOf(module);
+			settings.modules.splice(index,1);
 		}
+		
 	};
 }())

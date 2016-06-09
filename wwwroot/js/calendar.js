@@ -1,9 +1,8 @@
-/* TODO:
-- Implement multiple calendar accounts (config already optimized)
-*/
 var calendar = (function(){
 	'use strict';
 	
+	var _name = 'calendar';
+
 	var events = [];
 	var upcomming = [];
 	var past = [];
@@ -145,6 +144,7 @@ var calendar = (function(){
 		
 		var table = $('<table>');
 			table.addClass('fader');
+			table.addClass('gradient');
 			table.append(header);
 			table.append(upcommingTbody);
 			table.append(headerText);
@@ -162,7 +162,7 @@ var calendar = (function(){
 			
 			var icon = $('<td class="glyphicon glyphicon-calendar">');
 			var title = $('<th>').html(item.title);
-			var date = $('<td>').html(currDate);
+			var date = $('<td class="right">').html(currDate);
 				date.attr({'data-diff': diffDate, 'data-date': currDate});
 			var row = $('<tr>').append(icon).append(title).append(date);
 			tbody.append(row);
@@ -287,13 +287,15 @@ var calendar = (function(){
 	};
 	
 	return {
+		name: _name,
 		init: function(options){
 			init(options);
+		},
+		start: function(){
 			createApiUrl();
 			setSound();
 			getEvents();
 		},
-		
 		refresh: function(){
 			refreshEvents();
 		}

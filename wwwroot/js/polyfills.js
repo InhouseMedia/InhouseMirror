@@ -11,6 +11,13 @@ if (!String.prototype.format) {
   };
 }
 
+// Capitalize first letter of a string
+if(!String.prototype.capitalize){
+  String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  }
+}
+
 // Console
 if(!window.console){
 	window.console = {};

@@ -69,10 +69,16 @@ body.loading{ opacity: 0; }
 	margin-top:20px;
 }
 
+.module{
+  opacity:1;
+  transition: opacity 0.5s linear 0s;
+}
+
+.module.refresh{ opacity:0; }
+
 table{
   border-collapse: collapse;
   border-spacing: 0;
-	border-top:1px solid #808080;
   table-layout: fixed;
   width: 100%;  
   opacity:1;
@@ -81,17 +87,19 @@ table{
 
 table.fader{opacity:0;}
 
-table:after{
+table.gradient{ border-top:1px solid #808080; }
+
+table.gradient:after{
 	content: '';
 	display:block;
 	position:absolute;
 	width:calc(100% - 30px);
-	height:20%;
+	height:75%;
 	bottom:0;
 	background: linear-gradient(0, #000 0%, transparent 100%);
 }
 
-table thead th.icon{width:30px;}
+table thead th.icon{width:35px;}
 
 table tbody th,
 table tbody td{
@@ -104,13 +112,14 @@ table tbody td{
 table tbody th[colspan]{ border-bottom:1px solid #808080; }
 
 table tbody td{ 
-	text-align:right; 
 	padding-left:5px;
 	color:#808080;
   width:30%;
   opacity:1;
   transition: opacity 0.5s linear 0s;
 }
+
+table tbody td.right{ text-align:right;}
 
 table tbody td.glyphicon{
   text-align:left;
@@ -122,15 +131,28 @@ table tbody td.fader{ opacity:0; }
 
 table tbody td span{ color:#fff; }
 
-.blink {
-  animation: blink 1s step-start 0s infinite;
-  -webkit-animation: blink 1s step-start 0s infinite;
+#weather{ text-align:right; }
+
+#weather .wi{opacity:0.5;}
+
+#weather h1 .wi {
+ font-size:0.8em;
+ vertical-align: middle;
 }
+
+#weather h1 span{ padding-right: 0.2em;}
+#weather h3 span{ padding-right: 0.4em;}
+#weather h3 span:last-child{padding-right:0;}
 
 #time b{
   font-weight:normal;
   animation: blink 2s step-start 0s infinite;
-  -webkit-animation: blink 2s step-start 0s infinite;
+  -webkit-animation: blink 2s step-start 0s infinite ;
+}
+
+.fader #time b{
+  animation: blink 3s ease-in-out 0s infinite;
+  -webkit-animation: blink 3s ease-in-out 0s infinite;
 }
 
 @keyframes blink {
@@ -139,6 +161,5 @@ table tbody td span{ color:#fff; }
 @-webkit-keyframes blink {
   50% { opacity: 0; }
 }
-
 
 .col-md-12{float:inherit;}

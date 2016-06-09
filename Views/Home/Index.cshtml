@@ -1,13 +1,16 @@
 @{
     ViewData["Title"] = "Calendar";
 }
-<div class="row">
-    <div class="col-md-12"><h3 id="date"></h3></div>
-</div>
+
 <div class="row">
     <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12"><h1 id="time"></h1></div>
+        <div id="clock">
+            <div class="row">
+                <div class="col-md-12"><h3 id="date"></h3></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"><h1 id="time"></h1></div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -17,5 +20,8 @@
         </div>
     </div>
     <div class="col-md-4"></div>
-    <div class="col-md-4" id="weather"></div>
+    <div class="col-md-4" id="weather">
+        <div class="row" id="sunset"></div>
+        <div class="row" id="temperature"><div>
+    </div>
 </div>

@@ -13,9 +13,10 @@ var paths = {
     js: webroot + "js/**/*.js",
     minJs: webroot + "js/**/*.min.js",
     css: webroot + "css/**/*.css",
+    less: webroot + "less/**/*.less",
     minCss: webroot + "css/**/*.min.css",
-    concatJsDest: webroot + "js/site.min.js",
-    concatCssDest: webroot + "css/site.min.css"
+    concatJsDest: webroot + "js/bundle.min.js",
+    concatCssDest: webroot + "css/bundle.min.css"
 };
 
 gulp.task("clean:js", function (cb) {
@@ -43,3 +44,20 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min", ["min:js", "min:css"]);
+
+// Less configuration
+var less = require('gulp-less');
+
+gulp.task('less:generate', function() {
+    gulp.src(paths.less)
+        .pipe(less())
+        .pipe(gulp.dest(webroot + 'css/'))
+});
+
+gulp.task('less', ['less:generate', 'min:css', 'clean:css'], function() {
+    gulp.watch(paths.less, ['less:generate', 'min:css', 'clean:css'], {base: './less/'});
+});
+
+gulp.task('script', ['min:js', 'clean:js'], function(){
+    gulp.watch(paths.js, ['min:js', 'clean:js']);
+});

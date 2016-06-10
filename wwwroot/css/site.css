@@ -1,165 +1,172 @@
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot');
-  src: url('../font/fontawesome-webfont.woff') format('woff'), 
-  url('../fonts/fontawesome-webfont.ttf') format('truetype'), 
-  url('../fonts/fontawesome-webfont.svg') format('svg');
+  src: url('../font/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontawesome-webfont.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'HelveticaNeue-UltraLight';
   src: url('../fonts/HelveticaNeue-UltraLight.eot');
-  src: url('../fonts/HelveticaNeue-UltraLight.woff') format('woff'), 
-  url('../fonts/HelveticaNeue-UltraLight.ttf') format('truetype'),
-  url('../fonts/HelveticaNeue-UltraLight.svg') format('svg');
+  src: url('../fonts/HelveticaNeue-UltraLight.woff') format('woff'), url('../fonts/HelveticaNeue-UltraLight.ttf') format('truetype'), url('../fonts/HelveticaNeue-UltraLight.svg') format('svg');
   font-style: normal;
   font-weight: 100;
 }
-
 @font-face {
   font-family: 'HelveticaNeue-Medium';
   src: url('../fonts/HelveticaNeue-Medium.eot');
-  src: url('../fonts/HelveticaNeue-Medium.woff') format('woff'), 
-  url('../fonts/HelveticaNeue-Medium.ttf') format('truetype'), 
-  url('../fonts/HelveticaNeue-Medium.svg') format('svg');
+  src: url('../fonts/HelveticaNeue-Medium.woff') format('woff'), url('../fonts/HelveticaNeue-Medium.ttf') format('truetype'), url('../fonts/HelveticaNeue-Medium.svg') format('svg');
   font-style: normal;
   font-weight: 400;
 }
-
 @font-face {
   font-family: 'HelveticaNeue-Light';
   src: url('../fonts/HelveticaNeue-Light.eot');
-  src: url('../fonts/HelveticaNeue-Light.woff') format('woff'),
-  url('../fonts/HelveticaNeue-Light.ttf') format('truetype'),
-  url('../fonts/HelveticaNeue-Light.svg') format('svg');
+  src: url('../fonts/HelveticaNeue-Light.woff') format('woff'), url('../fonts/HelveticaNeue-Light.ttf') format('truetype'), url('../fonts/HelveticaNeue-Light.svg') format('svg');
   font-style: normal;
   font-weight: 200;
 }
-
-
-html,body{
-	font-family: "HelveticaNeue-Light", sans-serif;
-	background-color:#000;
-	color:#fff;
-	-webkit-font-smoothing: antialiased;
+html,
+body {
+  font-family: "HelveticaNeue-Light", sans-serif;
+  background-color: #000;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
   text-rendering: geometricprecision;
-	font-size:16px;
-	line-height:1.2em;
-  opacity:1;
+  font-size: 16px;
+  line-height: 1.2em;
+  opacity: 1;
   transition: opacity 0.5s linear 0.3s;
 }
-
-body.loading{ opacity: 0; }
-
-.h1,h1,.h2,h2,.h3,h3,.h4,h4{ margin:5px 0; }
-
-.h1,h1{
-	font-size:4em;
-	line-height:0.8em;
+html.loading,
+body.loading {
+  opacity: 0;
 }
-
-.h3,h3{ color:#808080; }
-
-.h4,h4{
-	font-size:1em;
-	text-transform: uppercase;
-	color:#808080;
-	margin-top:20px;
+.h1,
+h1,
+.h2,
+h2,
+.h3,
+h3,
+.h4,
+h4 {
+  margin: 5px 0;
 }
-
-.module{
-  opacity:1;
+.h1,
+h1 {
+  font-size: 4em;
+  line-height: 0.8em;
+}
+.h3,
+h3 {
+  color: #808080;
+}
+.h4,
+h4 {
+  font-size: 1em;
+  text-transform: uppercase;
+  color: #808080;
+  margin-top: 20px;
+}
+.module {
+  opacity: 1;
   transition: opacity 0.5s linear 0s;
 }
-
-.module.refresh{ opacity:0; }
-
-table{
+.module.refresh {
+  opacity: 0;
+}
+table {
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
-  width: 100%;  
-  opacity:1;
+  width: 100%;
+  opacity: 1;
   transition: opacity 0.5s linear 0s;
 }
-
-table.fader{opacity:0;}
-
-table.gradient{ border-top:1px solid #808080; }
-
-table.gradient:after{
-	content: '';
-	display:block;
-	position:absolute;
-	width:calc(100% - 30px);
-	height:75%;
-	bottom:0;
-	background: linear-gradient(0, #000 0%, transparent 100%);
+table.gradient {
+  border-top: 1px solid #808080;
 }
-
-table thead th.icon{width:35px;}
-
+table.gradient:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: calc(70%);
+  height: 75%;
+  bottom: 0;
+  background: linear-gradient(0, #000 0%, transparent 100%);
+}
+table thead th.icon {
+  width: 35px;
+}
 table tbody th,
-table tbody td{
-	line-height:1.5em;
+table tbody td {
+  line-height: 1.5em;
   white-space: nowrap;
-  overflow:hidden !important;
+  overflow: hidden !important;
   text-overflow: ellipsis;
 }
-
-table tbody th[colspan]{ border-bottom:1px solid #808080; }
-
-table tbody td{ 
-	padding-left:5px;
-	color:#808080;
-  width:30%;
-  opacity:1;
+table tbody th [colspan],
+table tbody td [colspan] {
+  border-bottom: 1px solid #808080;
+}
+table tbody td {
+  padding-left: 5px;
+  color: #808080;
+  width: 30%;
+  opacity: 1;
   transition: opacity 0.5s linear 0s;
 }
-
-table tbody td.right{ text-align:right;}
-
-table tbody td.glyphicon{
-  text-align:left;
-  width:30px;
+table tbody td.right {
+  text-align: right;
+}
+table tbody td.glyphicon {
+  text-align: left;
+  width: 30px;
   text-overflow: inherit;
 }
-
-table tbody td.fader{ opacity:0; }
-
-table tbody td span{ color:#fff; }
-
-#weather{ text-align:right; }
-
-#weather .wi{opacity:0.5;}
-
+table tbody td.fader {
+  opacity: 0;
+}
+table tbody td span {
+  color: #fff;
+}
+#weather {
+  text-align: right;
+}
+#weather .wi {
+  opacity: 0.5;
+}
 #weather h1 .wi {
- font-size:0.8em;
- vertical-align: middle;
+  font-size: 0.8em;
+  vertical-align: middle;
 }
-
-#weather h1 span{ padding-right: 0.2em;}
-#weather h3 span{ padding-right: 0.4em;}
-#weather h3 span:last-child{padding-right:0;}
-
-#time b{
-  font-weight:normal;
-  animation: blink 2s step-start 0s infinite;
-  -webkit-animation: blink 2s step-start 0s infinite ;
+#weather h1 span {
+  padding-right: 0.2em;
 }
-
-.fader #time b{
+#weather h3 span {
+  padding-right: 0.4em;
+}
+#weather h3 span:last-child {
+  padding-right: 0;
+}
+.fader #time b {
   animation: blink 3s ease-in-out 0s infinite;
-  -webkit-animation: blink 3s ease-in-out 0s infinite;
 }
-
+#time b {
+  font-weight: normal;
+  animation: blink 2s step-start 0s infinite;
+  -webkit-animation: blink 2s step-start 0s infinite;
+}
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 @-webkit-keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
-
-.col-md-12{float:inherit;}
+.col-md-12 {
+  float: inherit;
+}

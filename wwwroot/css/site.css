@@ -90,8 +90,8 @@ table.gradient:after {
   content: '';
   display: block;
   position: absolute;
-  width: calc(70%);
-  height: 75%;
+  width: calc(100%);
+  height: 40%;
   bottom: 0;
   background: linear-gradient(0, #000 0%, transparent 100%);
 }
@@ -105,8 +105,8 @@ table tbody td {
   overflow: hidden !important;
   text-overflow: ellipsis;
 }
-table tbody th [colspan],
-table tbody td [colspan] {
+table tbody th[colspan],
+table tbody td[colspan] {
   border-bottom: 1px solid #808080;
 }
 table tbody td {
@@ -127,18 +127,20 @@ table tbody td.glyphicon {
 table tbody td.fader {
   opacity: 0;
 }
-table tbody td span {
+table tbody td span,
+table tbody td.highlight {
   color: #fff;
 }
 #weather {
   text-align: right;
 }
-#weather .wi {
+#weather .wi:not(td) {
   opacity: 0.5;
 }
 #weather h1 .wi {
   font-size: 0.8em;
-  vertical-align: middle;
+  line-height: 0.8em;
+  vertical-align: top;
 }
 #weather h1 span {
   padding-right: 0.2em;
@@ -148,6 +150,16 @@ table tbody td span {
 }
 #weather h3 span:last-child {
   padding-right: 0;
+}
+#weatherforecast table {
+  width: 65%;
+  float: right;
+}
+#weatherforecast table thead th {
+  width: 28%;
+}
+#weatherforecast table thead th:first-child {
+  width: 16%;
 }
 .fader #time b {
   animation: blink 3s ease-in-out 0s infinite;

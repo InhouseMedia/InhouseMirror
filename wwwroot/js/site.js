@@ -8,7 +8,8 @@ $(document).ready(function(){
 	modules.init();
 	modules.register(clock);
 	modules.register(weather);
-	modules.register(calendar, {upcommingEvents:3, pastEvents:3});
+	modules.register(weatherforecast);
+	modules.register(calendar/*, {upcommingEvents:3, pastEvents:3}*/);
 	modules.start();
 });
 $(window).load(function(){

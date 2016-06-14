@@ -36,7 +36,7 @@ var weather = (function(){
 		url: 'http://api.openweathermap.org/data/2.5/weather?units={3}&lat={0}&lon={1}&appid={2}',
 		account: config.weather.accounts[0].account,
 		key: config.weather.accounts[0].token,
-		dateformat: 'HH:mm',
+		dateFormat: 'HH:mm',
 		units: 'metric',
 		refresh: 15,
 		debug: false
@@ -123,7 +123,7 @@ var weather = (function(){
 		var	windSpeed = $('<span>').html(_data.wind.speed);
 		var windDegreeIcon = $('<span>').addClass(_getDegreeIcon(_data.wind.deg));
 		var	sunsetIcon = $('<span>').addClass(sunriseSunsetIcon);
-		var	sunset = $('<span>').html(sunriseSunsetTime.format(_settings.dateformat));
+		var	sunset = $('<span>').html(sunriseSunsetTime.format(_settings.dateFormat));
 		
 			currentSun.append(city).append(sunsetIcon).append(sunset).append(windSpeedIcon).append(windSpeed).append(windDegreeIcon);
 		
@@ -151,10 +151,10 @@ var weather = (function(){
 
 		var date = new Date(_data.dt * 1000);
 		var modelDate = (new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes() + _settings.refresh));
-		var refreshDate = (new Date());
+		var refreshDate = new Date();
 		
 		if( modelDate > refreshDate) return; 
-		debugger;
+	
 		console.log(_name.capitalize(), 'Refresh', (new Date()).format('yyyy-MM-dd HH:mm'));
 
 		window.clearTimeout(_timeOutRefresh);
@@ -184,6 +184,7 @@ var weather = (function(){
 		start: function(){
 			if(_settings.debug) {
 				_createTable();
+				_toggleRefresh(false);		
 				return;
 			}
 			_getGeoLocation();

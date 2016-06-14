@@ -92,8 +92,8 @@ table{
       content: '';
       display:block;
       position:absolute;
-      width:calc(100% - 30px);
-      height:75%;
+      width:calc(100%);
+      height:40%;
       bottom:0;
       background: linear-gradient(0, #000 0%, transparent 100%);
     }
@@ -110,7 +110,7 @@ table{
       overflow:hidden !important;
       text-overflow: ellipsis;
 
-      [colspan]{ border-bottom:1px solid #808080; }
+      &[colspan]{ border-bottom:1px solid #808080; }
     }
  
     td{ 
@@ -130,7 +130,8 @@ table{
 
       &.fader{ opacity: 0; }
 
-      span{ color: #fff; }
+      span,
+      &.highlight{ color: #fff; }
     }
   }
 }
@@ -138,12 +139,13 @@ table{
 #weather{ 
   text-align:right; 
 
-  .wi{ opacity: 0.5; }
+  .wi:not(td){ opacity: 0.5; }
 
   h1{
     .wi{ 
       font-size: 0.8em;
-      vertical-align: middle;
+      line-height: 0.8em;
+      vertical-align: top;
     }
 
     span{ padding-right: 0.2em; }
@@ -154,6 +156,23 @@ table{
       padding-right: 0.4em;
 
       &:last-child{ padding-right: 0; }
+    }
+  }
+}
+
+#weatherforecast{
+  table{
+    width:65%;
+    float:right;
+
+    thead{
+      th{
+        width: 28%;
+
+        &:first-child{
+          width:16%;
+        }
+      }
     }
   }
 }
@@ -179,4 +198,4 @@ table{
   50% { opacity: 0; }
 }
 
-.col-md-12{float:inherit;} 
+.col-md-12{float:inherit;}

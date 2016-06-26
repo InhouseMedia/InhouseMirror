@@ -61,7 +61,7 @@ var weatherforecast = (function(){
 	};
 	
 	var _setGeoError = function(geo){
-		console.warning(_name.capitalize(), 'No location found');
+		console.warn(_name.capitalize(), 'No location found');
 		_onload();
 	}
 	
@@ -80,7 +80,7 @@ var weatherforecast = (function(){
 			_createTable();
 		},
 		function(){
-			console.warning(_name.capitalize(), 'No data found');
+			console.warn(_name.capitalize(), 'No data found');
 		});	
 	};
 	
@@ -135,12 +135,12 @@ var weatherforecast = (function(){
 			var refreshDate = new Date();
 			var date = new Date(item.dt * 1000);
 			var modelDate = (new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes() + _settings.refresh));
-			console.log(modelDate.getDate(), refreshDate.getDate(), modelDate, refreshDate);
+			//console.log(modelDate.getDate(), refreshDate.getDate(), modelDate, refreshDate);
 			return (refreshDate.getDate() == date.getDate() && modelDate > refreshDate);
 		});
 		
 		if(_.contains(true,xxx)) return; 
-		debugger;
+
 		console.log(_name.capitalize(), 'Refresh', (new Date()).format('yyyy-MM-dd HH:mm'));
 
 		window.clearTimeout(_timeOutRefresh);

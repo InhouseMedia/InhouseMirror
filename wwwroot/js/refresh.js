@@ -1,18 +1,19 @@
 var refresh = (function(){
 	'use strict';
 	
-	var blurTimer = null;
-	var compareTimer = null;
+	var _name = 'refresh';
+
+	var _blurTimer = null;
+	var _compareTimer = null;
 	
-	var noCanvas = null;
-	var noContext = null;
-	var xvideo = null;
-	var xstream = null;
-	var xcanvas = null;
-	var xcontext = null;
+	var _noCanvas = null;
+	var _noContext = null;
+	var _xvideo = null;
+	var _xstream = null;
+	var _xcanvas = null;
+	var _xcontext = null;
 	
-	var settings = {
-		modules: [],
+	var _settings = {
 		motionDetection: true,
 		blurTimer: (1000 * 20),
 		snapRate: 800,
@@ -24,22 +25,17 @@ var refresh = (function(){
 		debug: false
 	};
 	
-	var init = function(options){
-		settings = $.extend({}, settings, options);
-		settings.element = $(settings.element);
-		settings.debug = !settings.debug? config.debug : settings.debug;
-		//$(window).focus(function(){ location.reload(true); });
+	var _init = function(options){
+		_settings = $.extend({}, _settings, options);
+		_settings.element = $(_settings.element);
+		_settings.debug = !_settings.debug? config.debug : _settings.debug;
+		//$(window)._focus(function(){ location.reload(true); });
 	
-		noCanvas = $('<canvas>').attr({'width': settings.imageWidth, 'height': settings.imageHeight});
-		noContext = noCanvas.get(0).getContext("2d");
+		_noCanvas = $('<canvas>').attr({'width': _settings.imageWidth, 'height': _settings.imageHeight});
+		_noContext = _noCanvas.get(0).getContext("2d");
 	};
 	
-	var _register = function(mod){
-		settings.modules.push(mod);
-		
-	};
-	
-	var createRefreshHeader = function(){
+	var _createRefreshHeader = function(){
 		var today = new Date();
 		var tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1,0,0,0,10);
 		var refresh = Math.round((tomorrow - today)/1000);
@@ -52,20 +48,20 @@ var refresh = (function(){
 		console.log('Refresh page in', (refreshConsoleTime).toFixed(2), refreshConsoleType);
 	};
 	
-	var setBlurTimer = function(){
-		if(!settings.motionDetection) return;
-		blurTimer = window.setTimeout(blur,settings.blurTimer);
+	var _setBlurTimer = function(){
+		if(!_settings.motionDetection) return;
+		_blurTimer = window.setTimeout(_blur,_settings.blurTimer);
 	};
 	
-	var createMotionDetection = function(){
-		var video = $('<video>').attr({'autoplay': true, 'id': 'motion', 'width': settings.videoWidth, 'height': settings.videoHeight});
-			video.click(compareImages);
+	var _createMotionDetection = function(){
+		var video = $('<video>').attr({'autoplay': true, 'id': 'motion', 'width': _settings.videoWidth, 'height': _settings.videoHeight});
+			video.click(_compareImages);
 		
-		xvideo = video.get(0);
-		if(settings.debug) $('body').append(video);
+		_xvideo = video.get(0);
+		if(_settings.debug) $('body').append(video);
 	};
 	
-	var startMotionDetection = function(){
+	var _startMotionDetection = function(){
 		var videoObj = {'video': true};
 		
 		navigator.getUserMedia = navigator.getUserMedia ||
@@ -74,68 +70,62 @@ var refresh = (function(){
                          		navigator.msGetUserMedia;
 						  
 		navigator.getUserMedia(videoObj, function(stream){
-				xvideo.src = window.URL.createObjectURL(stream);
-				xvideo.play();
-				xstream = stream;
+				_xvideo.src = window.URL.createObjectURL(stream);
+				_xvideo.play();
+				_xstream = stream;
 		}.bind(this), function(e){console.log(e.code);});
 	};
 	
-	var createCanvas = function(){
-		xcanvas = $('<canvas>').attr({'id':'canvas', 'width': settings.imageWidth, 'height': settings.imageHeight});
+	var _createCanvas = function(){
+		_xcanvas = $('<canvas>').attr({'id':'canvas', 'width': _settings.imageWidth, 'height': _settings.imageHeight});
 		
-		xcontext = xcanvas.get(0).getContext("2d");
+		_xcontext = _xcanvas.get(0).getContext("2d");
 		
-		if(settings.debug) $('body').append(xcanvas);
+		if(_settings.debug) $('body').append(_xcanvas);
 	};
 	
-	var captureImage = function(){
-		noContext.drawImage(xvideo, 0, 0, settings.videoWidth, settings.videoHeight, 0, 0 , settings.imageWidth, settings.imageHeight);
+	var _captureImage = function(){
+		_noContext.drawImage(_xvideo, 0, 0, _settings.videoWidth, _settings.videoHeight, 0, 0 , _settings.imageWidth, _settings.imageHeight);
 			
-		var imageData = noContext.getImageData(0, 0, settings.imageWidth, settings.imageHeight);
+		var imageData = _noContext.getImageData(0, 0, _settings.imageWidth, _settings.imageHeight);
         var data = imageData.data;
-/*
-        for(var i = 0; i < data.length; i += 4) {
-          var brightness = (data[i] + data[i+1] + data[i+2])/3; //Grayscale image
-          data[i] = brightness; //Red
-          data[i+1] = brightness; //Green
-          data[i+2] = brightness; //Blue
-        }*/
+
 		return data;
 	};
 	
-	var compareImages = function(){
-		var image1 = captureImage();
+	var _compareImages = function(){
+		var image1 = _captureImage();
 		var image2;
 		var diff;
+
 		window.setTimeout(function(){	
-			image2 = captureImage();
-			diff = diffImage(image1,image2);
-			xcontext.putImageData(diff.imageData, 0,0);
+			image2 = _captureImage();
+			diff = _diffImage(image1,image2);
+			_xcontext.putImageData(diff.imageData, 0,0);
 		
 			//testing
-			if(settings.debug) {
-				$(xcanvas).css({'border': '1px solid ' + ((diff.procent >= settings.sensitivity)? 'red' : 'transparent')});
-				$(xvideo).css({'border': '1px solid ' + ((diff.procent >= settings.sensitivity)? 'red' : 'transparent')});
+			if(_settings.debug) {
+				$(_xcanvas).css({'border': '1px solid ' + ((diff.procent >= _settings.sensitivity)? 'red' : 'transparent')});
+				$(_xvideo).css({'border': '1px solid ' + ((diff.procent >= _settings.sensitivity)? 'red' : 'transparent')});
 			} 
 			
-			if(diff.procent >= settings.sensitivity){	
+			if(diff.procent >= _settings.sensitivity){	
 				if($('body').hasClass('loading')){
-					//window.location.reload(false);
-					focus();
-					settings.modules.forEach(function(item){item.refresh();});
+					_focus();
+					$('body').trigger('refresh');
 				}
 				console.log('motion trigger', diff.procent, '%');
-				window.clearTimeout(blurTimer);
-				blurTimer = window.setTimeout(blur, settings.blurTimer);
+				window.clearTimeout(_blurTimer);
+				_blurTimer = window.setTimeout(_blur, _settings.blurTimer);
 			}
 			
-		},settings.snapRate);	
+		},_settings.snapRate);	
 		
-		compareTimer = window.setTimeout(compareImages,settings.snapRate)
+		_compareTimer = window.setTimeout(_compareImages,_settings.snapRate)
 	};
 	
-	var diffImage = function(image1,image2){
-		var imageData = noContext.getImageData(0, 0, settings.imageWidth, settings.imageHeight);
+	var _diffImage = function(image1,image2){
+		var imageData = _noContext.getImageData(0, 0, _settings.imageWidth, _settings.imageHeight);
         var data = imageData.data;
 		var count = 0;
 		for(var i = 0; i < image1.length; i += 4) {
@@ -151,56 +141,54 @@ var refresh = (function(){
         }
 		
 		var procent = Math.round(count/(image1.length/4) * 100);
-		if(settings.debug) console.log(procent + '%');
+		if(_settings.debug) console.log(procent + '%');
 		return {imageData: imageData, procent: procent};
 	};
 	
-	var focus = function(){
+	var _focus = function(){
 		$('body.loading').removeClass('loading');
 	};
 	
-	var blur = function(){
+	var _blur = function(){
 		$('body').addClass('loading');
 	};
 	
 	return {
+		name: _name,
 		init: function(options){	
-			init(options);
-			createRefreshHeader();
-			setBlurTimer();
-		},
-		focus: function(){
-			focus();
-		},
-		blur: function(){
-			blur();
-		},
-		motion: function(){
-			if(!settings.motionDetection) return;
-			
-			createMotionDetection();
-			startMotionDetection();
-			createCanvas();
-			compareImages();
+			_init(options);
 		},
 		start: function(){
-			startMotionDetection();
-			compareImages();
+			_createRefreshHeader();
+
+			if(!_settings.motionDetection) return;
+			
+			_setBlurTimer();
+
+			this.motion();
+		},
+		refresh: function(){
+			// DUMMY
+		},
+		focus: function(){
+			_focus();
+		},
+		blur: function(){
+			_blur();
+		},
+		motion: function(){
+			if(!_settings.motionDetection) return;
+			
+			_createMotionDetection();
+			_startMotionDetection();
+			_createCanvas();
+			_compareImages();
 		},
 		stop: function(){
-			if(xstream.active){
-				window.clearTimeout(compareTimer);
-				xstream.getTracks()[0].stop();	
+			if(_xstream.active){
+				window.clearTimeout(_compareTimer);
+				_xstream.getTracks()[0].stop();	
 			} 
-		},
-		register: function(mod){
-			_register(mod);
-			
-		},
-		unregister: function(module){
-			var index = settings.modules.indexOf(module);
-			settings.modules.splice(index,1);
 		}
-		
 	};
 }())

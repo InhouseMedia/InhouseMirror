@@ -61,7 +61,7 @@ var weather = (function(){
 	};
 	
 	var _setGeoError = function(geo){
-		console.warning(_name.capitalize(), 'No location found');
+		console.warn(_name.capitalize(), 'No location found');
 		_onload();
 	}
 	
@@ -80,7 +80,7 @@ var weather = (function(){
 			_createTable();
 		},
 		function(){
-			console.warning(_name.capitalize(), 'No data found');
+			console.warn(_name.capitalize(), 'No data found');
 		});	
 	};
 	

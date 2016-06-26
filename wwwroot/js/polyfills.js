@@ -18,6 +18,14 @@ if(!String.prototype.capitalize){
   }
 }
 
+// Round a number on decimals
+if(!Number.prototype.round){
+  Number.prototype.round = function(places) {
+    return +(Math.round(this + "e+" + places)  + "e-" + places);
+  }
+}
+
+
 // Console
 if(!window.console){
 	window.console = {};

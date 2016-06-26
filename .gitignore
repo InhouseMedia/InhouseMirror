@@ -7,10 +7,11 @@
 *.userosscache
 *.sln.docstates
 
-CUSTOM RKLANKE 
+#CUSTOM RKLANKE 
 *.sh
 *.command
 wwwroot/js/config.js
+ngrok
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

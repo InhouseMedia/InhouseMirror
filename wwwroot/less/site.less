@@ -68,19 +68,15 @@ html,body{
 	margin-top:20px;
 }
 
-blockquote{
-  border:none;
-  margin:0;
-  padding:0;
-  display:inline-block;
-/*
-  &:before,
-  &:after{
-    content: '"';
-    font-size:2em;
-    vertical-align: -webkit-baseline-middle;
+.col-sm-offset-2,
+.col-sm-offset-3,
+.col-sm-offset-4{text-align:right;}
 
-  }*/
+.fixed-bottom{
+  background: linear-gradient(0, #000 0%, transparent 100%);
+  position:fixed;
+  left:0;
+  bottom:0;
 }
 
 .module{
@@ -109,6 +105,7 @@ table{
       position:absolute;
       width:calc(100%);
       height:40%;
+      left:0;
       bottom:0;
       background: linear-gradient(0, #000 0%, transparent 100%);
     }
@@ -152,8 +149,6 @@ table{
 }
 
 #weather{ 
-  text-align:right; 
-
   .wi:not(td){ opacity: 0.5; }
 
   h1{
@@ -177,8 +172,8 @@ table{
 
 #weatherforecast{
   table{
-    width:65%;
-    float:right;
+    //width:65%;
+    //float:right;
 
     thead{
       th{
@@ -192,26 +187,27 @@ table{
   }
 }
 
-#news{
-  position:fixed;
-  bottom:0;
 
+#news{
   table{
     opacity:1;
-    margin-top:0em;
     margin-bottom:1em;
 
-    transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 
     td, th{
       text-align:center;
 
       h3{
-        display:inline-block;
         color:#fff;
+        line-height:1.2em;
+        text-overflow: ellipsis;
+         white-space: nowrap;
+        overflow:hidden;
       }
 
       span{
+        font-size:0.7em;
         margin-left:0.5em;
         color:#808080;
       }
@@ -220,9 +216,8 @@ table{
 
   &.fader{
     table{
-      transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease-in-out;
       opacity:0;
-      margin-top:-3em;
     }  
   }
 }
@@ -249,3 +244,19 @@ table{
 }
 
 .col-md-12{float:inherit;}
+
+
+
+
+@media (max-width: 768px){
+  .fixed-bottom{
+    position:static;
+    background:transparent;
+  }
+
+  .col-sm-offset-2,
+  .col-sm-offset-3,
+  .col-sm-offset-4{text-align:left;}
+
+  table tbody.past{display:none;}
+}

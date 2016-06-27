@@ -3,7 +3,6 @@ var news = (function(){
 	
 	var _name = 'news';
 
-	var _timeOutRefresh = null;
 	var _newsTimeout = null;
 	var _data = null;
 	var _counter = 0;
@@ -17,8 +16,6 @@ var news = (function(){
 		total: 10,
 		type: '',
 		age: 'Day',
-		refresh: 15,
-		blinkSpeed: 5000,
 		debug: false
 	};
 
@@ -43,19 +40,11 @@ var news = (function(){
 	};
 
 	var _getNews = function(){
-
-		jQuery.support.cors = true;
-
 		$.ajax({
 			url: _settings.url,
 			type: 'GET',
 			contentType: 'application/json',
 			crossDomain: true,
-			/*beforeSend: function( xhr ) {
-   				 xhr.setRequestHeader('Ocp-Apim-Subscription-Key', _settings.key);
-				 xhr.setRequestHeader('Content-Type', 'application/json');
-
-  			}*/
 			headers: {
 				'Ocp-Apim-Subscription-Key': _settings.key,
 				'Content-Type': 'application/json'
@@ -85,15 +74,13 @@ var news = (function(){
 		var item = $(_data.value).get(_counter);
 		var modalDate = new Date() - new Date(item.datePublished);
 
-		console.log('----',  modalDate, item.name, _counter, _data.value.length);
-
 		var date = modalDate > 3600000 ? Math.round(modalDate / 3600000) + ' uur geleden': Math.round(modalDate / 60000) + ' minuten geleden';
-			date = modalDate < 60000 ? 'nu': date;
+			date = modalDate < 120000 ? 'nu': date;
 
 		var title = item.name.replace(/[\'\"\“\”\‘\’]/gm, '');
 		var provider =  $(item.provider).get(0).name || '';
 
-		var table = $('<table><tbody><tr><td>' + date + '</td></tr><tr><th><h3>' + title + '</h3><span>' + provider + '</span></th></tr></tbody></table>')
+		var table = $('<table><tbody><tr><td>' + date + '</td></tr><tr><th><h3>' + title + '<span>' + provider + '</span></h3></th></tr></tbody></table>')
 		
 		_settings.element.html(table);
 		

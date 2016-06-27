@@ -3,30 +3,29 @@
 }
 
 <div class="row">
-    <div class="col-md-4">
-        <div id="clock">
-            <div class="row">
-                <h3 id="date"></h3>
-            </div>
-            <div class="row">
-                <h1 id="time"></h1>
-            </div>
-        </div>
-        <div class="row">
-            <h4>Agenda</h4>
-            <div id="calendar"></div>   
-        </div>
+    <div class="col-xs-12 col-sm-4" id="clock">    
+        <h3 class="row" id="date"></h3>
+        <h1 class="row" id="time"></h1>
     </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4" id="weather">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-2" id="weather">
         <div class="row" id="sunset"></div>
         <div class="row" id="temperature"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-5">         
+        <div class="row"><h4>Agenda</h4></div>
+        <div class="row" id="calendar"></div>   
+    </div>
+    <div class="col-xs-12 col-sm-3 col-sm-offset-4">
         <div class="row"><h4>Weerbericht</h4></div>
         <div class="row" id="weatherforecast"></div> 
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
+
+<div class="row fixed-bottom">
+    <div class="col-xs-12">
         <div id="news"></div>
     </div>
 </div>

@@ -139,9 +139,9 @@ var calendar = (function(){
 		sffjs.setCulture('nl-NL');
 		
 		var upcommingTbody = _createRows(_upcomming);
-		var pastTbody = _createRows(_past);
+		var pastTbody = _createRows(_past, 'past');
 		var header = $('<thead><tr><th class="icon"></th><th></th><th></th></tr></thead>');
-		var headerText = $('<tbody><tr><th colspan=3><h4>Historie</h4></th></tr></tbody>');
+		var headerText = $('<tbody class="past"><tr><th colspan=3><h4>Historie</h4></th></tr></tbody>');
 		
 		var table = $('<table>');
 			table.addClass('fader');
@@ -154,8 +154,9 @@ var calendar = (function(){
 		_settings.element.html(table);
 	};
 	
-	var _createRows = function(items){
-		var tbody = $('<tbody>');
+	var _createRows = function(items, name){
+		var className = name || '';
+		var tbody = $('<tbody class="' + className + '">');
 		
 		items.forEach(function(item){
 			var diffDate = _createDaysNotation(item);

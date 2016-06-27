@@ -68,19 +68,16 @@ h4 {
   color: #808080;
   margin-top: 20px;
 }
-blockquote {
-  border: none;
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-  /*
-  &:before,
-  &:after{
-    content: '"';
-    font-size:2em;
-    vertical-align: -webkit-baseline-middle;
-
-  }*/
+.col-sm-offset-2,
+.col-sm-offset-3,
+.col-sm-offset-4 {
+  text-align: right;
+}
+.fixed-bottom {
+  background: linear-gradient(0, #000 0%, transparent 100%);
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 .module {
   opacity: 1;
@@ -106,6 +103,7 @@ table.gradient:after {
   position: absolute;
   width: calc(100%);
   height: 40%;
+  left: 0;
   bottom: 0;
   background: linear-gradient(0, #000 0%, transparent 100%);
 }
@@ -145,9 +143,6 @@ table tbody td span,
 table tbody td.highlight {
   color: #fff;
 }
-#weather {
-  text-align: right;
-}
 #weather .wi:not(td) {
   opacity: 0.5;
 }
@@ -165,25 +160,16 @@ table tbody td.highlight {
 #weather h3 span:last-child {
   padding-right: 0;
 }
-#weatherforecast table {
-  width: 65%;
-  float: right;
-}
 #weatherforecast table thead th {
   width: 28%;
 }
 #weatherforecast table thead th:first-child {
   width: 16%;
 }
-#news {
-  position: fixed;
-  bottom: 0;
-}
 #news table {
   opacity: 1;
-  margin-top: 0em;
   margin-bottom: 1em;
-  transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 #news table td,
 #news table th {
@@ -191,18 +177,21 @@ table tbody td.highlight {
 }
 #news table td h3,
 #news table th h3 {
-  display: inline-block;
   color: #fff;
+  line-height: 1.2em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 #news table td span,
 #news table th span {
+  font-size: 0.7em;
   margin-left: 0.5em;
   color: #808080;
 }
 #news.fader table {
-  transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
   opacity: 0;
-  margin-top: -3em;
 }
 .fader #time b {
   animation: blink 3s ease-in-out 0s infinite;
@@ -224,4 +213,18 @@ table tbody td.highlight {
 }
 .col-md-12 {
   float: inherit;
+}
+@media (max-width: 768px) {
+  .fixed-bottom {
+    position: static;
+    background: transparent;
+  }
+  .col-sm-offset-2,
+  .col-sm-offset-3,
+  .col-sm-offset-4 {
+    text-align: left;
+  }
+  table tbody.past {
+    display: none;
+  }
 }

@@ -15,7 +15,7 @@ var refresh = (function(){
 	
 	var _settings = {
 		motionDetection: true,
-		blurTimer: (1000 * 20),
+		blurTimer: (1000 * 60),
 		snapRate: 800,
 		sensitivity: 10,
 		videoWidth: 640,

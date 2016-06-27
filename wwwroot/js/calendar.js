@@ -288,7 +288,7 @@ var calendar = (function(){
 		var date = new Date(_data.updated);
 		var modelDate = (new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes() + _refreshMoment));
 		var refreshDate = new Date();
-		 console.log('-----', date, modelDate, refreshDate, modelDate, refreshDate);
+		 //console.log('-----', date, modelDate, refreshDate, modelDate, refreshDate);
 		if(modelDate > refreshDate) return; 
 	
 		console.log(_name.capitalize(), 'Refresh', (new Date()).format('yyyy-MM-dd HH:mm'));

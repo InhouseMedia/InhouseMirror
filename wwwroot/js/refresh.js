@@ -191,4 +191,4 @@ var refresh = (function(){
 			} 
 		}
 	};
-}())
+}());

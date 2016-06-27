@@ -179,4 +179,4 @@ var weatherforecast = (function(){
 			_refresh();
 		}
 	};
-}())
+}());

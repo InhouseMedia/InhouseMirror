@@ -24,6 +24,10 @@ var modules = (function(){
 		_.mapObject(_config.modules, function(item){item.start();});
 	};
 	
+	var _get = function(name){
+		return _config.modules[name];
+	};
+
 	var _refresh = function(event, name){
 		if(name == null){
 			_.mapObject(_config.modules, function(item){item.refresh();});
@@ -51,6 +55,9 @@ var modules = (function(){
 		},
 		refresh: function(name){
 			_refresh(null, name);
+		},
+		get: function(name){
+			return _get(name);
 		}
 	};
 })();	

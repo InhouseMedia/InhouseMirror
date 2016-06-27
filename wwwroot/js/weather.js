@@ -193,4 +193,4 @@ var weather = (function(){
 			_refresh();
 		}
 	};
-}())
+}());

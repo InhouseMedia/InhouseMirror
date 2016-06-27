@@ -68,6 +68,20 @@ h4 {
   color: #808080;
   margin-top: 20px;
 }
+blockquote {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  /*
+  &:before,
+  &:after{
+    content: '"';
+    font-size:2em;
+    vertical-align: -webkit-baseline-middle;
+
+  }*/
+}
 .module {
   opacity: 1;
   transition: opacity 0.5s linear 0s;
@@ -160,6 +174,35 @@ table tbody td.highlight {
 }
 #weatherforecast table thead th:first-child {
   width: 16%;
+}
+#news {
+  position: fixed;
+  bottom: 0;
+}
+#news table {
+  opacity: 1;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+#news table td,
+#news table th {
+  text-align: center;
+}
+#news table td h3,
+#news table th h3 {
+  display: inline-block;
+  color: #fff;
+}
+#news table td span,
+#news table th span {
+  margin-left: 0.5em;
+  color: #808080;
+}
+#news.fader table {
+  transition: margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  margin-top: -3em;
 }
 .fader #time b {
   animation: blink 3s ease-in-out 0s infinite;

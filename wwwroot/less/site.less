@@ -89,6 +89,7 @@ html,body{
 }
 
 table{
+  position: relative;
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
@@ -172,27 +173,20 @@ table{
 
 #weatherforecast{
   table{
-    //width:65%;
-    //float:right;
-
     thead{
       th{
         width: 28%;
 
-        &:first-child{
-          width:16%;
-        }
+        &:first-child{ width:16%; }
       }
     }
   }
 }
 
-
 #news{
   table{
     opacity:1;
     margin-bottom:1em;
-
     transition: opacity 0.5s ease-in-out;
 
     td, th{
@@ -243,12 +237,10 @@ table{
   50% { opacity: 0; }
 }
 
-.col-md-12{float:inherit;}
-
-
-
-
 @media (max-width: 768px){
+  
+  table {font-size:1.2em;}
+
   .fixed-bottom{
     position:static;
     background:transparent;
@@ -256,7 +248,7 @@ table{
 
   .col-sm-offset-2,
   .col-sm-offset-3,
-  .col-sm-offset-4{text-align:left;}
+  .col-sm-offset-4{text-align:left; margin-left:0;}
 
   table tbody.past{display:none;}
 }

@@ -95,8 +95,11 @@ var weatherforecast = (function(){
 			table.addClass('gradient');
 			table.append(header);
 			table.append(upcommingTbody);
-			
-		_settings.element.html(table);
+		
+		var items = $('<div>');
+			items.append('<h4>Weerbericht</h4>');
+			items.append(table);
+		_settings.element.html(items);
 
 		console.log(_name.capitalize(), 'Last update', new Date().format('yyyy-MM-dd HH:mm'));
 	};

@@ -150,8 +150,11 @@ var calendar = (function(){
 			table.append(upcommingTbody);
 			table.append(headerText);
 			table.append(pastTbody);
-			
-		_settings.element.html(table);
+		
+		var items = $('<div>');
+			items.append('<h4>Agenda</h4>');
+			items.append(table);
+		_settings.element.html(items);
 	};
 	
 	var _createRows = function(items, name){

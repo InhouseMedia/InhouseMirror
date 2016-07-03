@@ -125,7 +125,8 @@ var weather = (function(){
 		var	sunsetIcon = $('<span>').addClass(sunriseSunsetIcon);
 		var	sunset = $('<span>').html(sunriseSunsetTime.format(_settings.dateFormat));
 		
-			currentSun.append(city).append(sunsetIcon).append(sunset).append(windSpeedIcon).append(windSpeed).append(windDegreeIcon);
+		var extra = $('<div class="extra">').append(windSpeedIcon).append(windSpeed).append(windDegreeIcon)
+			currentSun.append(city).append(sunsetIcon).append(sunset).append(extra);
 		
 		var currentWeather = $('<h1>');
 		var weatherIcon = $('<span>').addClass('wi ' + _iconTable[$(_data.weather).get(0).icon]);

@@ -117,6 +117,8 @@ table{
   }
  
   tbody{
+    th{font-weight:normal;}
+
     th,td{
       line-height:1.5em;
       white-space: nowrap;
@@ -151,7 +153,9 @@ table{
 
 #weather{ 
   .wi:not(td){ opacity: 0.5; }
-
+  
+  .extra{display:inline-block;}
+  
   h1{
     .wi{ 
       font-size: 0.8em;
@@ -238,8 +242,28 @@ table{
 }
 
 @media (max-width: 768px){
-  
-  table {font-size:1.2em;}
+  body{font-size:1.5em;}
+
+  .h1,h1{
+    font-size:3.5em;
+  }
+
+  table {
+    //font-size:1.6em;
+
+    thead {
+      th{
+        &.icon{ width:0; }
+      }
+    }
+
+    tbody{
+      th{text-overflow: initial;}
+      td{
+        &.glyphicon{ width:0; }
+      }       
+    } 
+  }
 
   .fixed-bottom{
     position:static;
@@ -250,5 +274,5 @@ table{
   .col-sm-offset-3,
   .col-sm-offset-4{text-align:left; margin-left:0;}
 
-  table tbody.past{display:none;}
+  .extra{display:none;}
 }

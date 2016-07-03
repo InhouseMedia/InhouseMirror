@@ -139,9 +139,9 @@ var calendar = (function(){
 		sffjs.setCulture('nl-NL');
 		
 		var upcommingTbody = _createRows(_upcomming);
-		var pastTbody = _createRows(_past, 'past');
+		var pastTbody = _createRows(_past, 'extra');
 		var header = $('<thead><tr><th class="icon"></th><th></th><th></th></tr></thead>');
-		var headerText = $('<tbody class="past"><tr><th colspan=3><h4>Historie</h4></th></tr></tbody>');
+		var headerText = $('<tbody class="extra"><tr><th colspan=3><h4>Historie</h4></th></tr></tbody>');
 		
 		var table = $('<table>');
 			table.addClass('fader');

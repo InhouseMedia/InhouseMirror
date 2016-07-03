@@ -68,12 +68,19 @@ var refresh = (function(){
                           		navigator.webkitGetUserMedia ||
                           		navigator.mozGetUserMedia ||
                          		navigator.msGetUserMedia;
-						  
+		  
 		navigator.getUserMedia(videoObj, function(stream){
 				_xvideo.src = window.URL.createObjectURL(stream);
 				_xvideo.play();
 				_xstream = stream;
-		}.bind(this), function(e){console.log(e.code);});
+
+				_createCanvas();
+				_compareImages();
+
+		}.bind(this), function(e){
+			console.log(e.code); 
+			_settings.motionDetection = false;
+		});
 	};
 	
 	var _createCanvas = function(){
@@ -161,11 +168,11 @@ var refresh = (function(){
 		start: function(){
 			_createRefreshHeader();
 
-			if(!_settings.motionDetection) return;
-			
-			_setBlurTimer();
-
 			this.motion();
+
+			if(!_settings.motionDetection) return;
+
+			_setBlurTimer();
 		},
 		refresh: function(){
 			// DUMMY
@@ -181,8 +188,6 @@ var refresh = (function(){
 			
 			_createMotionDetection();
 			_startMotionDetection();
-			_createCanvas();
-			_compareImages();
 		},
 		stop: function(){
 			if(_xstream.active){

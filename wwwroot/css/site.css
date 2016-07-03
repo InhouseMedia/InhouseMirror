@@ -111,6 +111,9 @@ table.gradient:after {
 table thead th.icon {
   width: 35px;
 }
+table tbody th {
+  font-weight: normal;
+}
 table tbody th,
 table tbody td {
   line-height: 1.5em;
@@ -146,6 +149,9 @@ table tbody td.highlight {
 }
 #weather .wi:not(td) {
   opacity: 0.5;
+}
+#weather .extra {
+  display: inline-block;
 }
 #weather h1 .wi {
   font-size: 0.8em;
@@ -213,8 +219,21 @@ table tbody td.highlight {
   }
 }
 @media (max-width: 768px) {
-  table {
-    font-size: 1.2em;
+  body {
+    font-size: 1.5em;
+  }
+  .h1,
+  h1 {
+    font-size: 3.5em;
+  }
+  table thead th.icon {
+    width: 0;
+  }
+  table tbody th {
+    text-overflow: initial;
+  }
+  table tbody td.glyphicon {
+    width: 0;
   }
   .fixed-bottom {
     position: static;
@@ -226,7 +245,7 @@ table tbody td.highlight {
     text-align: left;
     margin-left: 0;
   }
-  table tbody.past {
+  .extra {
     display: none;
   }
 }
